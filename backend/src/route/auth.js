@@ -1,5 +1,5 @@
 import express from "express";
-import bcript from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwl  from "jsonwebtoken";
 import User from "../models/user.js";
 import { error } from "console";
@@ -16,7 +16,7 @@ router.post("/signup", async (req,res)=>{
         if(existing) return res.status(400).json({msg : "Email Already Exists"});
 
 
-        const haspassword   = await bcript.hash(password, 10);
+        const haspassword   = await bcrypt.hash(password, 10);
 
         const user =  await User.create({
             name,
@@ -49,11 +49,11 @@ router.post("/login", async(req,res)=>{
         const {email, password} =  req.body;
 
         const user =  await User.findOne({email});
-        if (!user) return res.status(400).json({msg : "Invalid Email or password"}) ;
+        if (!user) return res.status(401).json({msg : "Invalid Email or password"}) ;
 
         if(!user.password){return res.status(400).json({msg:"This account uses Google/GitHub login"})}
 
-        const isMatch = await  bcript.compare(password,user.password);
+        const isMatch = await  bcrypt.compare(password,user.password);
         if (!isMatch) return res.status(400).json({msg : "Invalid Email or password"}) ;
 
 
