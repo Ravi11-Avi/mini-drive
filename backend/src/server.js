@@ -24,19 +24,17 @@ const app =  express();
 
 
 
-
-app.use(cors({
-    origin:[
-        "http://localhost:5173",
-        "https://your-vercel-project.vercel.app"
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://mini-drive-phi.vercel.app"
     ],
-
-    
     credentials: true,
-    methods:["GET","POST","PUT", "DELETE","OPTIONS"],
-    allowedHeaders:["Content-Type","Authorization"],
-}));
-
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
