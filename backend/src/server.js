@@ -28,7 +28,10 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://mini-drive-phi.vercel.app"
+      "https://mini-drive-phi.vercel.app",
+      "https://mini-drive-qzvu612xu-ravis-projects-cc701dee.vercel.app",
+      "https://mini-drive-git-main-ravis-projects-cc701dee.vercel.app",
+      
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
