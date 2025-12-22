@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/googleIcon.png";
 import WGitIcon from "../assets/WgithubIcon.png";
 import LogoIcon from "../assets/logo.png";
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Login() {
   const navigation = useNavigate();
@@ -28,12 +29,21 @@ function Login() {
     }
   };
 
-  const handlegithublogin=()=>{
-    window.location.href = "http://localhost:5000/api/auth/github";
-  }
-  const handlegooglelogin = ()=>{
-    window.location.href = "http://localhost:5000/api/auth/google"
-  }
+  // const handlegithublogin=()=>{
+  //   window.location.href = "http://localhost:5000/api/auth/github";
+  // }
+  // const handlegooglelogin = ()=>{
+  //   window.location.href = "http://localhost:5000/api/auth/google"
+  // }
+
+  const handlegithublogin = () => {
+  window.location.href = `${API}/auth/github`;
+};
+
+const handlegooglelogin = () => {
+  window.location.href = `${API}/auth/google`;
+};
+
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-gray-900 to-black">
@@ -124,7 +134,7 @@ function Login() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 type="button"
-                // onClick={handlegooglelogin}
+                onClick={handlegooglelogin}
                 className="flex-1 flex items-center justify-center gap-2 sm:gap-3 border border-purple-800/50 py-3 sm:py-3.5 px-4 rounded-lg hover:bg-purple-900/20 hover:border-purple-600 transition-all duration-300 group"
               >
                 <img 
@@ -139,7 +149,7 @@ function Login() {
 
               <button
                 type="button"
-                // onClick={handlegithublogin}
+                onClick={handlegithublogin}
 
                 className="flex-1 flex items-center justify-center gap-2 sm:gap-3 border border-gray-700 py-3 sm:py-3.5 px-4 rounded-lg hover:bg-gray-800 hover:border-purple-600 transition-all duration-300 group"
               >
