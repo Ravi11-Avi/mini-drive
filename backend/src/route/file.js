@@ -47,22 +47,39 @@ router.get("/list",authmiddleware, async(req,res)=>{
 });
 
 
-router.delete("/:id", authmiddleware, async(req,res)=>{
-    const file =  await File.findById(req.params.id)
-    if (!file) return res.status(404).json({mess: "File Not Found "})
-    if (file.user.toString()!== req.user) return res.status(403).json({mess: "NOT ALLOWED"})
-    
+router.delete("/:id", authmiddleware, async (req, res) => {
+  try {
+    const file = await File.findById(req.params.id);
+
+    if (!file) {
+      return res.status(404).json({ mess: "File Not Found" });
+    }
+
+    if (file.user.toString() !== req.user) {
+      return res.status(403).json({ mess: "NOT ALLOWED" });
+    }
+
+    console.log("Deleting from S3:", file.key);
 
     await s3Client.send(
-        new DeleteObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: file.key
-        })
-    )
+      new DeleteObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: file.key
+      })
+    );
 
     await file.deleteOne();
-    res.json({mess: "File Deleted"})
 
+    res.json({ mess: "File Deleted Successfully" });
+
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
+    res.status(500).json({
+      mess: "Failed to delete file",
+      error: err.message
+    });
+  }
 });
+
 
 export default router;
