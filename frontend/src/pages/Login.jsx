@@ -124,7 +124,7 @@ function Login() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 type="button"
-                onClick={handlegooglelogin}
+                // onClick={handlegooglelogin}
                 className="flex-1 flex items-center justify-center gap-2 sm:gap-3 border border-purple-800/50 py-3 sm:py-3.5 px-4 rounded-lg hover:bg-purple-900/20 hover:border-purple-600 transition-all duration-300 group"
               >
                 <img 
@@ -139,7 +139,7 @@ function Login() {
 
               <button
                 type="button"
-                onClick={handlegithublogin}
+                // onClick={handlegithublogin}
 
                 className="flex-1 flex items-center justify-center gap-2 sm:gap-3 border border-gray-700 py-3 sm:py-3.5 px-4 rounded-lg hover:bg-gray-800 hover:border-purple-600 transition-all duration-300 group"
               >
