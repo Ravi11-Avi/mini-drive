@@ -29,7 +29,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://mini-drive-phi.vercel.app",
-      "https://mini-drive-o5lh98oyv-ravis-projects-cc701dee.vercel.app",
+      "https://mini-drive-gpg9ti40t-ravis-projects-cc701dee.vercel.app",
       "https://mini-drive-git-main-ravis-projects-cc701dee.vercel.app",
       
     ],
