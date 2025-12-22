@@ -31,9 +31,10 @@ app.use(cors({
         "https://your-vercel-project.vercel.app"
     ],
 
-    // methods:["GET","POST","PUT", "DELETE","OPTIONS"],
-    // allowedHeaders:["Content-Type","Authorization"],
+    
     credentials: true,
+    methods:["GET","POST","PUT", "DELETE","OPTIONS"],
+    allowedHeaders:["Content-Type","Authorization"],
 }));
 
 
