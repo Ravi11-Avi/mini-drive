@@ -17,7 +17,7 @@
 
 ## 📖 Overview
 
-**Mini Drive** is a Google Drive-inspired file storage application built with the **MERN stack**. Users can sign up, upload files, organise them, and access them from any device. The frontend is a fast Vite/React SPA deployed on Vercel; the backend is a Node.js/Express REST API deployed on Render, with files and metadata persisted in MongoDB Atlas.
+**Mini Drive** is a Google Drive-inspired file storage application built with the **MERN stack**. Users can sign up, upload files, organise them, and share them via links from any device. The frontend is a fast Vite/React SPA deployed on Vercel; the backend is a Node.js/Express REST API deployed on Render, with files and metadata persisted in MongoDB Atlas.
 
 ## ✨ Features
 
@@ -26,10 +26,10 @@
 | 🔐 User authentication (JWT) | ✅ |
 | 📤 File upload & storage | ✅ |
 | 📁 File listing & management | ✅ |
+| 🔗 Shareable file links | ✅ |
 | 🔒 Secure per-user file access | ✅ |
 | 🌐 Cloud deployment (Vercel + Render) | ✅ |
 | 📂 Folder/directory support | 🛣️ Roadmap |
-| 🔗 Shareable file links | 🛣️ Roadmap |
 | 🔍 File search | 🛣️ Roadmap |
 
 ---
@@ -132,6 +132,28 @@ sequenceDiagram
     MG-->>API: Saved document
     API-->>FE: { success: true, file: {...} }
     FE-->>U: File appears in dashboard
+```
+
+### 3. Shareable Link Flow
+
+```mermaid
+sequenceDiagram
+    participant O as Owner
+    participant FE as React Frontend
+    participant API as Express API
+    participant DB as MongoDB
+    participant R as Recipient (Anyone)
+
+    O->>FE: Clicks "Share" on a file
+    FE->>API: POST /api/files/:id/share (JWT)
+    API->>DB: Generate & store share token for file
+    DB-->>API: Share token saved
+    API-->>FE: { shareUrl: "/share/:token" }
+    FE-->>O: Shareable link copied to clipboard
+    R->>API: GET /api/files/share/:token (no auth needed)
+    API->>DB: Lookup file by share token
+    DB-->>API: File metadata + URL
+    API-->>R: File download / preview
 ```
 
 ---
@@ -258,11 +280,11 @@ PORT=5000
 No automated test suite yet. Use this checklist before pushing changes:
 
 - [ ] Register a new user
-- [ ] Log in with valid credentials
-- [ ] Receive JWT and access the dashboard
-- [ ] Upload a file successfully
-- [ ] View uploaded files in the dashboard
-- [ ] Try accessing another user's file — should be blocked (403)
+- [ ] Log in with valid credentials and receive JWT
+- [ ] Upload a file and confirm it appears in the dashboard
+- [ ] Generate a shareable link for a file
+- [ ] Open the shareable link in an incognito window (no login) — file should be accessible
+- [ ] Try accessing another user's private file — should be blocked (403)
 - [ ] Log out and confirm protected routes redirect to login
 
 **Planned:** Unit tests with [Vitest](https://vitest.dev/), API integration tests with [Supertest](https://github.com/ladjs/supertest).
@@ -272,7 +294,6 @@ No automated test suite yet. Use this checklist before pushing changes:
 ## 🛣️ Roadmap
 
 - [ ] Folder / directory support
-- [ ] Shareable file links (public/private)
 - [ ] File search & filtering
 - [ ] File preview (images, PDFs)
 - [ ] AWS S3 or Cloudinary for scalable file storage
